@@ -80,8 +80,8 @@ const Eventos = () => {
             {cards.map((card, index) => {
               let className = "carousel-card";
               if (index === centerIndexRight) className += " center";
-              else if ((index + 1) % cards.length === centerIndexRight) className += " left";
-              else className += " right";
+              else if ((index + 1) % cards.length === centerIndexRight) className += " right";
+              else className += " left";
   
               return (
                 <div
