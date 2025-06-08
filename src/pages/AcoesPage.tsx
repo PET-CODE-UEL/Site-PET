@@ -1,25 +1,43 @@
-import AreaCard from "../components/AreaCard";
+import { useState } from "react";
+import AreaCard from "../components/AreaCard.tsx";
+import SubmenuModal from "../components/SubmenuModal.tsx";
 
-// A página de Ações agora exibe as três principais áreas de atuação
-// do PET-CODE usando o componente reutilizável AreaCard.
+type Area = {
+  title: string;
+  color: string;
+};
+
+const areas: Area[] = [
+  { title: "Computação", color: "#2E6E9E" },
+  { title: "Design", color: "#EA7F28" },
+  { title: "Ciência de Dados", color: "#36A2EB" },
+];
+
 export default function AcoesPage() {
+  const [activeArea, setActiveArea] = useState<Area | null>(null);
+
   return (
-    <div className="container mx-auto px-6 py-16 flex flex-col items-center">
-      {/* Container principal que organiza os cards em linha e os centraliza */}
-      <div className="flex flex-col md:flex-row justify-center items-center gap-12 md:gap-16">
-        <AreaCard
-          bgColor="#2E6E9E" // Azul para Computação
-          title="Computação"
-        />
-        <AreaCard
-          bgColor="#EA7F28" // Laranja para Design
-          title="Design"
-        />
-        <AreaCard
-          bgColor="#36A2EB" // Azul claro para Ciência de Dados
-          title="Ciência de Dados"
-        />
+    // O container principal ocupa 90% da altura da tela para centralizar verticalmente o conteúdo
+    <div className="flex h-[90vh] items-center justify-center">
+      <div className="container mx-auto flex w-full flex-wrap justify-around px-6">
+        {areas.map((area) => (
+          <AreaCard
+            key={area.title}
+            bgColor={area.color}
+            title={area.title}
+            onClick={() => setActiveArea(area)}
+          />
+        ))}
       </div>
+
+      {/* Renderiza o modal de submenu se uma área estiver ativa */}
+      {activeArea && (
+        <SubmenuModal
+          area={activeArea}
+          onClose={() => setActiveArea(null)}
+        />
+      )}
     </div>
   );
 }
+

@@ -1,14 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import HomePage from "../pages/HomePage";
-import QuemSomosPage from "../pages/QuemSomosPage";
-import ProjetosPage from "../pages/ProjetosPage";
 import AcoesPage from "../pages/AcoesPage";
-import EventosPage from "../pages/EventosPage";
+import EmProgressoPage from "../pages/EmProgressoPage";
 
-// createBrowserRouter cria as rotas da aplicação.
-// A rota pai '/' usa o MainLayout, garantindo que a Navbar
-// apareça em todas as páginas filhas.
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -20,11 +15,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/quem-somos",
-        element: <QuemSomosPage />,
+        element: <EmProgressoPage />,
       },
       {
         path: "/projetos",
-        element: <ProjetosPage />,
+        element: <EmProgressoPage />,
       },
       {
         path: "/acoes",
@@ -32,7 +27,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/eventos",
-        element: <EventosPage />,
+        element: <EmProgressoPage />,
       },
     ],
   },

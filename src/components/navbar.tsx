@@ -1,52 +1,28 @@
 import { NavLink } from "react-router-dom";
-import logo from "../assets/logo.svg";
+import logo from "@/assets/logo.svg";
 
 export default function Navbar() {
-  // Estilo base para os links da navbar, com transição suave.
   const linkStyle =
-    "text-black hover:opacity-70 transition-opacity duration-300";
-
-  // Estilos aplicados ao link da página ativa.
-  const activeLinkStyle = {
-    opacity: 0.5,
-  };
+    "font-cascadia text-xl text-black transition-opacity duration-300 hover:opacity-60";
 
   return (
-    <header className="bg-white shadow-md">
-      <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
-        {/* Logo que leva para a Home Page */}
+    <header className="h-[10vh] bg-white shadow-md">
+      <nav className="container mx-auto flex h-full items-center justify-between px-16">
         <NavLink to="/">
-          <img src={logo} className="h-8" alt="Logo PET-CODE" />
+           * O logo importado é usado aqui. Com a correção do alias,
+          <img src={logo} className="h-9 w-auto" alt="Logo PET-CODE" />
         </NavLink>
-
-        {/* Itens de Navegação */}
-        <div className="flex items-center space-x-8 font-sans font-bold">
-          <NavLink
-            to="/quem-somos"
-            className={linkStyle}
-            style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}
-          >
+        <div className="flex items-center space-x-16">
+          <NavLink to="/quem-somos" className={linkStyle}>
             Quem somos
           </NavLink>
-          <NavLink
-            to="/projetos"
-            className={linkStyle}
-            style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}
-          >
+          <NavLink to="/projetos" className={linkStyle}>
             Projetos
           </NavLink>
-          <NavLink
-            to="/acoes"
-            className={linkStyle}
-            style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}
-          >
+          <NavLink to="/acoes" className={linkStyle}>
             Ações
           </NavLink>
-          <NavLink
-            to="/eventos"
-            className={linkStyle}
-            style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}
-          >
+          <NavLink to="/eventos" className={linkStyle}>
             Eventos
           </NavLink>
         </div>
@@ -54,3 +30,4 @@ export default function Navbar() {
     </header>
   );
 }
+
