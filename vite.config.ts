@@ -1,13 +1,15 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import tailwindscss from "@tailwindcss/vite";
-import path from "path"; // Importe o módulo 'path' do Node.js
+// vite.config.ts
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import path from 'path' // <-- Importe o 'path' do Node.js
 
 export default defineConfig({
-  plugins: [react(), tailwindscss()],
+  plugins: [react()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      // Aqui estamos criando o alias '@'
+      '@': path.resolve(__dirname, './src'),
     },
   },
-});
+})
+

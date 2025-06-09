@@ -1,18 +1,18 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import tailwindscss from "@tailwindcss/vite";
-import path from "path"; // Importe o módulo 'path' do Node.js
-
-// https://vite.dev/config/
-export default defineConfig({
-  plugins: [react(), tailwindscss()],
-  // CORREÇÃO: Adicionando um 'alias' para a pasta 'src'.
-  // Agora você pode usar '@/' para se referir à pasta 'src' de qualquer lugar do projeto,
-  // o que torna as importações mais limpas e confiáveis.
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/app",
+    "types": ["node"]
   },
-});
-
+  "files": [
+    "src/main.ts",
+    "src/polyfills.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts"
+  ],
+  "exclude": [
+    "src/**/*.test.ts",
+    "src/**/*.spec.ts"
+  ]
+}
