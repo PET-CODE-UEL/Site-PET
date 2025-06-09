@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-import logo from "@/assets/logo.svg";
 
 export default function Navbar() {
   const linkClasses =
@@ -9,7 +8,7 @@ export default function Navbar() {
     <header className="h-[10vh] bg-white shadow-md">
       <nav className="container mx-auto flex h-full items-center justify-between px-16">
         <NavLink to="/">
-          <img src={logo} className="h-8 w-auto" alt="Logo PET-CODE" />
+          <img src="/logo.svg" className="h-8 w-auto" alt="Logo PET-CODE" />
         </NavLink>
 
         <div className="flex items-center space-x-16">

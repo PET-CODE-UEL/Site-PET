@@ -1,15 +1,16 @@
-// vite.config.ts
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import path from 'path' // <-- Importe o 'path' do Node.js
+import tailwindcss from '@tailwindcss/vite' 
+import path from 'path'
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    tailwindcss(),
+  ],
   resolve: {
     alias: {
-      // Aqui estamos criando o alias '@'
       '@': path.resolve(__dirname, './src'),
     },
   },
 })
-

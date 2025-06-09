@@ -17,7 +17,6 @@ export default function AcoesPage() {
   const [activeArea, setActiveArea] = useState<Area | null>(null);
 
   return (
-    // O container principal ocupa 90% da altura da tela para centralizar verticalmente o conteúdo
     <div className="flex h-[90vh] items-center justify-center">
       <div className="container mx-auto flex w-full flex-wrap justify-around px-6">
         {areas.map((area) => (
@@ -30,7 +29,6 @@ export default function AcoesPage() {
         ))}
       </div>
 
-      {/* Renderiza o modal de submenu se uma área estiver ativa */}
       {activeArea && (
         <SubmenuModal
           area={activeArea}
