@@ -21,95 +21,111 @@ interface ActionDetailsModalProps {
 const ActionDetailsModal: React.FC<ActionDetailsModalProps> = ({ action, onClose }) => {
   return (
     <div className="fixed inset-0 z-50">
-      {/* Fundo desfocado */}
+      {/* Background overlay - full screen except navbar */}
       <div 
-        className="absolute inset-4 top-28 rounded-3xl"
-        style={{ opacity: 1, backdropFilter: 'blur(60px)' }}
+        className="absolute left-0 right-0 bottom-0 bg-black bg-opacity-40 backdrop-blur-md"
+        style={{ top: '13vh' }}
         onClick={onClose}
       />
       
-      {/* Overlay escuro */}
-      <div 
-        className="absolute inset-4 top-28 bg-black rounded-3xl"
-        style={{ opacity: 0.4, backdropFilter: 'blur(60px)' }}
-        onClick={onClose}
-      />
-      
-      {/* Botão de fechar */}
+      {/* Close button */}
       <button 
-        className="close-button absolute w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white flex items-center justify-center transition-all duration-300 hover:scale-105 hover:opacity-80"
+        className="absolute top-4 right-4 w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-white 
+                   flex items-center justify-center transition-all duration-300 
+                   hover:scale-105 hover:bg-gray-100 shadow-lg z-10
+                   border-2 border-gray-200"
         onClick={onClose}
-        style={{
-          top: "10%",
-          left: "96%",
-          margin: '10px',
-          zIndex: 9999,
-          border: '3px solid rgba(0, 0, 0, 0.3)',
-        }}
+        style={{ top: 'calc(13vh + 1rem)' }}
         aria-label="Close details"
       >
-        <span className="text-black text-xl sm:text-2xl font-bold leading-none" 
-              style={{ 
-                fontFamily: 'monospace',
-                fontWeight: '900',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                textShadow: '0 1px 2px rgba(255, 255, 255, 0.5)'
-              }}>
-          ×
-        </span>
+        <span className="text-black text-xl lg:text-2xl font-bold leading-none">×</span>
       </button>
       
-      {/* Conteúdo do modal em grid 2x2 */}
-      <div className="absolute inset-16 top-40 rounded-3xl grid grid-cols-2 gap-8" style={{ gridTemplateRows: '65% 35%' }}>        
-        {/* Imagem da ação */}
-        <div className="rounded-lg p-4">
-          <img 
-            src={action.image} 
-            alt={action.title}
-            className="w-full h-full object-cover rounded-md"
-          />
-        </div>
-        
-        {/* Informações principais */}
-        <div className="rounded-lg p-4 text-white">
-          <h2 className="text-5xl font-bold" style={{ marginBottom: '1rem' }}>{action.title}</h2>
-          
-          <div className="mb-8">
-            <h3 className="font-semibold mb-2">Petianos envolvidos:</h3>
-            <ul className="space-y-1 text-base">
-              {action.participants.map((participant, index) => (
-                <li key={index}>- {participant}</li>
-              ))}
-            </ul>
+      {/* Modal content container - occupies full screen except navbar with padding */}
+      <div 
+        className="absolute left-4 right-4 bottom-4 overflow-hidden"
+        style={{ top: 'calc(13vh + 1rem)' }}
+      >
+        {/* Content grid */}
+        <div className="h-full grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 p-4 lg:p-8">
+          {/* Image section */}
+          <div className="flex flex-col min-h-0">
+            <div className="flex-1 rounded-xl overflow-hidden bg-white shadow-lg">
+              <img 
+                src={action.image} 
+                alt={action.title}
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
           
-          <div className="mb-8">
-            <h3 className="font-semibold mb-2">Atividades em desenvolvimento:</h3>
-            <ul className="space-y-1 text-base">
-              {action.activities.map((activity, index) => (
-                <li key={index}>- {activity}</li>
-              ))}
-            </ul>
+          {/* Content section */}
+          <div className="flex flex-col min-h-0 text-white space-y-4 lg:space-y-6">
+            {/* Title */}
+            <div>
+              <h2 className="text-2xl lg:text-4xl xl:text-5xl font-bold mb-2 lg:mb-4">
+                {action.title}
+              </h2>
+            </div>
+            
+            {/* Scrollable content */}
+            <div className="flex-1 overflow-y-auto space-y-4 lg:space-y-6 pr-2">
+              {/* Participants */}
+              <div>
+                <h3 className="text-lg lg:text-xl font-semibold mb-2 lg:mb-3">
+                  Petianos envolvidos:
+                </h3>
+                <ul className="space-y-1 text-sm lg:text-base">
+                  {action.participants.map((participant, index) => (
+                    <li key={index} className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <span>{participant}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              
+              {/* Activities */}
+              <div>
+                <h3 className="text-lg lg:text-xl font-semibold mb-2 lg:mb-3">
+                  Atividades em desenvolvimento:
+                </h3>
+                <ul className="space-y-1 text-sm lg:text-base">
+                  {action.activities.map((activity, index) => (
+                    <li key={index} className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <span>{activity}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              
+              {/* Results */}
+              <div>
+                <h3 className="text-lg lg:text-xl font-semibold mb-2 lg:mb-3">
+                  Resultados:
+                </h3>
+                <ul className="space-y-1 text-sm lg:text-base">
+                  {action.results.map((result, index) => (
+                    <li key={index} className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <span>{result}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              
+              {/* About section */}
+              <div>
+                <h3 className="text-lg lg:text-xl font-semibold mb-2 lg:mb-3">
+                  Sobre a Ação:
+                </h3>
+                <p className="text-sm lg:text-base leading-relaxed">
+                  {action.about}
+                </p>
+              </div>
+            </div>
           </div>
-          
-          <div>
-            <h3 className="font-semibold mb-2">Resultados:</h3>
-            <ul className="space-y-1 text-base">
-              {action.results.map((result, index) => (
-                <li key={index}>- {result}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-        
-        {/* Descrição completa ocupando as duas colunas */}
-        <div className="col-span-2 rounded-lg p-4 text-white">
-          <h2 className="text-3xl font-bold" style={{ marginBottom: '1rem' }}>Sobre a Ação</h2>
-          <p className="text-lg leading-relaxed">
-            {action.about}
-          </p>
         </div>
       </div>
     </div>
