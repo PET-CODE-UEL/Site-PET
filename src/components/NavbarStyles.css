@@ -1,0 +1,52 @@
+/* Custom styles for navbar hover effects */
+.nav-item {
+  position: relative;
+  transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.5s ease;
+  font-family: 'Cascadia Code', monospace;
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+  white-space: nowrap;
+  /* Use font-feature-settings instead of font-weight for smoother transitions */
+  font-feature-settings: "kern";
+  font-kerning: normal;
+  letter-spacing: 0.01em;
+}
+
+.nav-group:hover .nav-item:not(:hover) {
+  opacity: 0.4;
+  transition: opacity 0.6s ease;
+}
+
+.nav-item:hover {
+  transform: scale(1.15);
+  opacity: 1;
+  z-index: 10;
+}
+
+/* More robust solution for text shifting */
+.nav-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-item span {
+  display: inline-block;
+  vertical-align: top;
+  font-weight: normal;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.nav-item:hover span {
+  font-weight: bold;
+  transform: scale(1.03);
+}
+
+/* Add a pseudo-element to prevent text shifting when font-weight changes */
+.nav-item::after {
+  content: attr(data-text);
+  display: block;
+  font-weight: bold;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+}

@@ -1,16 +1,16 @@
-// tailwind.config.js
-/** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    './index.html',
-    './src/**/*.{js,ts,jsx,tsx}', 
+    "./index.html",
+    "./src/**/*.{ts,tsx}"
   ],
   theme: {
     extend: {
       fontFamily: {
-        principal: ['Cascadia Code', 'monospace'], 
-      },
+        sans: ["Cascadia Code", "system-ui", "sans-serif"],
+        mono: ["Cascadia Code", "monospace"]
+      }
     },
   },
   plugins: [],
 }
+
