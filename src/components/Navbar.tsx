@@ -15,10 +15,10 @@ const Navbar = () => {
 
   return (
     <div className="w-full h-full py-6 flex items-center justify-center">
-      <div className="w-[85%] mx-auto">
+      <div className="w-[96%] mx-auto">
         <nav className="flex items-center justify-between h-full">
           {/* Logo with proper spacing */}
-          <div className="py-2">
+          <div className="py-2 logo-container">
             <Link to="/" className="block">
               <img src="/logo.svg" alt="PET CODE Logo" className="h-10" />
             </Link>
