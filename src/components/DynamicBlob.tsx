@@ -6,6 +6,7 @@ interface DynamicBlobProps {
   height: number;
 }
 
+// Classe principal que representa o blob animado
 class Blob {
   points: Point[] = [];
   _canvas?: HTMLCanvasElement;
@@ -21,6 +22,7 @@ class Blob {
     this.points = [];
   }
 
+  // Cria os pontos que formam o contorno do blob
   init() {
     for (let i = 0; i < this.numPoints; i++) {
       let point = new Point(this.divisional * (i + 1), this);
@@ -28,6 +30,7 @@ class Blob {
     }
   }
 
+  // Renderiza o blob no canvas usando curvas suaves
   render() {
     if (!this.canvas || !this.ctx) return;
     
@@ -39,6 +42,7 @@ class Blob {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    // Resolve a física dos pontos
     pointsArray[0].solveWith(pointsArray[points - 1], pointsArray[1]);
 
     let p0 = pointsArray[points - 1].position;
@@ -49,6 +53,7 @@ class Blob {
     ctx.moveTo(center.x, center.y);
     ctx.moveTo((p0.x + p1.x) / 2, (p0.y + p1.y) / 2);
 
+    // Desenha curvas suaves conectando os pontos
     for (let i = 1; i < points; i++) {
       pointsArray[i].solveWith(
         pointsArray[i - 1],
@@ -102,7 +107,7 @@ class Blob {
     }
   }
   get numPoints() {
-    return this._points || 28; // Increased points for smoother curves without being too dynamic
+    return this._points || 28; // Mais pontos = curvas mais suaves
   }
 
   set radius(value: number) {
@@ -111,7 +116,7 @@ class Blob {
     }
   }
   get radius() {
-    return this._radius || 200; // Increased default radius for bigger size
+    return this._radius || 200; // Raio padrão aumentado para tamanho maior
   }
 
   set position(value: { x: number; y: number }) {
@@ -142,9 +147,10 @@ class Blob {
   }
 }
 
+// Cada ponto representa um vértice do contorno do blob
 class Point {
   parent: Blob;
-  azimuth: number;
+  azimuth: number; // Ângulo do ponto
   _components: { x: number; y: number };
   _acceleration?: number;
   _speed?: number;
@@ -160,9 +166,10 @@ class Point {
       y: Math.sin(this.azimuth),
     };
 
-    this.acceleration = -0.4 + Math.random() * 0.8; // Reduced variation for more stable movement
+    this.acceleration = -0.4 + Math.random() * 0.8; // Movimento inicial aleatório mais suave
   }
 
+  // Calcula a física com base nos pontos vizinhos
   solveWith(leftPoint: Point, rightPoint: Point) {
     this.acceleration =
       (-0.3 * this.radialEffect +
@@ -202,9 +209,9 @@ class Point {
   }
 
   get position() {
-    // Create a horizontal bean shape by using different radii for x and y
-    const radiusX = (this.parent.radius + this.radialEffect) * 1.3; // Wider width
-    const radiusY = (this.parent.radius + this.radialEffect) * 0.8; // A little bigger vertically
+    // Cria uma forma oval horizontal (feijão)
+    const radiusX = (this.parent.radius + this.radialEffect) * 1.3; // Mais largo
+    const radiusY = (this.parent.radius + this.radialEffect) * 0.8; // Um pouco maior verticalmente
     
     return {
       x: this.parent.center.x + this.components.x * radiusX,
@@ -222,7 +229,7 @@ class Point {
     }
   }
   get elasticity() {
-    return this._elasticity || 0.0015; // Reduced from 0.002 for less buggy behavior
+    return this._elasticity || 0.0015; // Reduzido para menos movimento bugado
   }
 
   set friction(value: number) {
@@ -231,10 +238,11 @@ class Point {
     }
   }
   get friction() {
-    return this._friction || 0.008; // Increased friction to reduce excessive movement
+    return this._friction || 0.008; // Mais atrito = menos movimento excessivo
   }
 }
 
+// Componente React que renderiza o blob dinâmico
 const DynamicBlob: React.FC<DynamicBlobProps> = ({ color, width, height }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const blobRef = useRef<Blob | null>(null);
@@ -249,18 +257,19 @@ const DynamicBlob: React.FC<DynamicBlobProps> = ({ color, width, height }) => {
     const blob = new Blob();
     blobRef.current = blob;
 
+    // Configuração inicial do blob
     blob.canvas = canvas;
     blob.color = color;
-    // Make the blob bigger with horizontal bean shape
-    blob.radius = Math.min(width, height) * 0.45; // Slightly reduced for better proportions
+    blob.radius = Math.min(width, height) * 0.45; // Proporção ligeiramente reduzida
     blob.position = { x: 0.5, y: 0.5 };
-    blob.numPoints = 28; // More points for smoother curves
+    blob.numPoints = 28; // Mais pontos = curvas mais suaves
     blob.init();
     blob.render();
 
     let oldMousePoint = { x: 0, y: 0 };
     let hover = false;
 
+    // Interação com o mouse para deformar o blob
     const mouseMove = (e: PointerEvent) => {
       const rect = canvas.getBoundingClientRect();
       const clientX = e.clientX - rect.left;
@@ -269,10 +278,10 @@ const DynamicBlob: React.FC<DynamicBlobProps> = ({ color, width, height }) => {
       let pos = blob.center;
       let diff = { x: clientX - pos.x, y: clientY - pos.y };
       
-      // Account for horizontal elliptical shape in distance calculation
+      // Considera a forma elíptica no cálculo de distância
       let normalizedDiff = {
-        x: diff.x / (blob.radius * 1.3), // Width factor
-        y: diff.y / (blob.radius * 0.8)  // Height factor
+        x: diff.x / (blob.radius * 1.3), // Fator de largura
+        y: diff.y / (blob.radius * 0.8)  // Fator de altura
       };
       let dist = Math.sqrt(normalizedDiff.x * normalizedDiff.x + normalizedDiff.y * normalizedDiff.y);
       let angle = null;
@@ -293,6 +302,7 @@ const DynamicBlob: React.FC<DynamicBlobProps> = ({ color, width, height }) => {
         let nearestPoint: Point | null = null;
         let distanceFromPoint = 100;
 
+        // Encontra o ponto mais próximo do mouse
         blob.points.forEach((point) => {
           if (Math.abs(angle! - point.azimuth) < distanceFromPoint) {
             nearestPoint = point;
@@ -305,8 +315,8 @@ const DynamicBlob: React.FC<DynamicBlobProps> = ({ color, width, height }) => {
             x: oldMousePoint.x - clientX, 
             y: oldMousePoint.y - clientY 
           };
-          let strengthMagnitude = Math.sqrt((strength.x * strength.x) + (strength.y * strength.y)) * 8; // Reduced sensitivity
-          if (strengthMagnitude > 80) strengthMagnitude = 80; // Reduced max strength
+          let strengthMagnitude = Math.sqrt((strength.x * strength.x) + (strength.y * strength.y)) * 8; // Sensibilidade reduzida
+          if (strengthMagnitude > 80) strengthMagnitude = 80; // Força máxima reduzida
           (nearestPoint as Point).acceleration = (strengthMagnitude / 80) * (hover ? -1 : 1);
         }
       }

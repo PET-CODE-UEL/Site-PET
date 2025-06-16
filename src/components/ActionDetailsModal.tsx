@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Dados de uma ação do PET
 interface ActionDetails {
   id: string;
   area: string;
@@ -16,24 +17,25 @@ interface ActionDetailsModalProps {
   onClose: () => void;
 }
 
+// Modal que exibe os detalhes de uma ação do PET
 const ActionDetailsModal: React.FC<ActionDetailsModalProps> = ({ action, onClose }) => {
   return (
     <div className="fixed inset-0 z-50">
-      {/* Backdrop blur */}
+      {/* Fundo desfocado */}
       <div 
         className="absolute inset-4 top-28 rounded-3xl"
         style={{ opacity: 1, backdropFilter: 'blur(60px)' }}
         onClick={onClose}
       />
       
-      {/* Dark overlay */}
+      {/* Overlay escuro */}
       <div 
         className="absolute inset-4 top-28 bg-black rounded-3xl"
         style={{ opacity: 0.4, backdropFilter: 'blur(60px)' }}
         onClick={onClose}
       />
       
-      {/* Close button - positioned absolute to top-right of page */}
+      {/* Botão de fechar */}
       <button 
         className="close-button absolute w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white flex items-center justify-center transition-all duration-300 hover:scale-105 hover:opacity-80"
         onClick={onClose}
@@ -43,7 +45,6 @@ const ActionDetailsModal: React.FC<ActionDetailsModalProps> = ({ action, onClose
           margin: '10px',
           zIndex: 9999,
           border: '3px solid rgba(0, 0, 0, 0.3)',
-          //boxShadow: '0 8px 32px rgba(255, 255, 255, 0.3), inset 0 1px 0 rgba(0, 0, 0, 0.2)',
         }}
         aria-label="Close details"
       >
@@ -60,8 +61,9 @@ const ActionDetailsModal: React.FC<ActionDetailsModalProps> = ({ action, onClose
         </span>
       </button>
       
-      {/* Modal content */}
-      <div className="absolute inset-16 top-40 rounded-3xl grid grid-cols-2 gap-8" style={{ gridTemplateRows: '65% 35%' }}>        {/* Top left area - 25% */}
+      {/* Conteúdo do modal em grid 2x2 */}
+      <div className="absolute inset-16 top-40 rounded-3xl grid grid-cols-2 gap-8" style={{ gridTemplateRows: '65% 35%' }}>        
+        {/* Imagem da ação */}
         <div className="rounded-lg p-4">
           <img 
             src={action.image} 
@@ -70,7 +72,7 @@ const ActionDetailsModal: React.FC<ActionDetailsModalProps> = ({ action, onClose
           />
         </div>
         
-        {/* Top right area - 25% */}
+        {/* Informações principais */}
         <div className="rounded-lg p-4 text-white">
           <h2 className="text-5xl font-bold" style={{ marginBottom: '1rem' }}>{action.title}</h2>
           
@@ -102,7 +104,7 @@ const ActionDetailsModal: React.FC<ActionDetailsModalProps> = ({ action, onClose
           </div>
         </div>
         
-        {/* Bottom area - 50% (spans both columns) */}
+        {/* Descrição completa ocupando as duas colunas */}
         <div className="col-span-2 rounded-lg p-4 text-white">
           <h2 className="text-3xl font-bold" style={{ marginBottom: '1rem' }}>Sobre a Ação</h2>
           <p className="text-lg leading-relaxed">

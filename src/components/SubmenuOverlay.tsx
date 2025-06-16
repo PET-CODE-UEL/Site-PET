@@ -11,7 +11,9 @@ interface SubmenuOverlayProps {
   onActionSelect?: (actionId: string) => void;
 }
 
+// Overlay que exibe o submenu com blob dinâmico e ações
 const SubmenuOverlay: React.FC<SubmenuOverlayProps> = ({ selectedArea, actions, onActionSelect }) => {
+  // Define a cor do blob baseada na área selecionada
   const getBackgroundColor = (area: string) => {
     switch (area) {
       case 'design':
@@ -27,7 +29,7 @@ const SubmenuOverlay: React.FC<SubmenuOverlayProps> = ({ selectedArea, actions, 
 
   return (
     <div className="absolute inset-0 z-20 flex flex-col justify-center items-center overflow-hidden">
-      {/* Dynamic Blob Background */}
+      {/* Container do blob dinâmico */}
       <div 
         className="relative flex flex-col justify-center items-center"
         style={{
@@ -37,14 +39,14 @@ const SubmenuOverlay: React.FC<SubmenuOverlayProps> = ({ selectedArea, actions, 
           maxHeight: '800px',
         }}
       >
-        {/* Canvas-based dynamic blob */}
+        {/* Blob animado de fundo */}
         <DynamicBlob
           color={getBackgroundColor(selectedArea)}
           width={Math.min(window.innerWidth * 0.98, 1600)}
           height={Math.min(window.innerHeight * 0.85, 800)}
         />
 
-        {/* Action items grid - positioned over the blob */}
+        {/* Grid de ações posicionado sobre o blob */}
         <div className="absolute inset-0 flex items-center justify-center z-10">
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-4 lg:gap-6 xl:gap-8 mx-auto px-6">
             {actions.map((action) => (
