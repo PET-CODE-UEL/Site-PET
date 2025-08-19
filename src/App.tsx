@@ -1,50 +1,35 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Layout from "./components/Layout";
-import AnimatedLayout from "./components/AnimatedLayout";
-import "./components/PageTransitions.css";
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
 
-import Home from "./pages/HomePage";
-import QuemSomos from "./pages/QuemSomosPage";
-import Projetos from "./pages/ProjetosPage";
-import Acoes from "./pages/AcoesPage";
-import Eventos from "./pages/EventosPage";
+function App() {
+  const [count, setCount] = useState(0)
 
-function AppContent() {
-  const location = useLocation();
-  
-  // Define which pages should have orange background (development pages)
-  const developmentPages = ['/', '/quem-somos', '/projetos', '/eventos'];
-  const isDevPage = developmentPages.includes(location.pathname);
-  
   return (
-    <div className={`h-screen font-mono flex flex-col overflow-hidden bg-transition ${isDevPage ? 'bg-orange-400' : 'bg-gray-50'}`}>
-      {/* Header area with navbar */}
-      <div className="navbar-container flex-shrink-0" style={{ height: '13vh' }}>
-        <div className="navbar-inner h-full">
-          <Navbar />
-        </div>
+    <>
+      <div>
+        <a href="https://vite.dev" target="_blank">
+          <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
       </div>
-      
-      {/* Main content taking remaining space */}
-      <div className="flex-grow overflow-hidden" style={{ height: '87vh' }}>
-        <Routes>
-          <Route path="/"           element={<Layout><AnimatedLayout animationType="slide" staggerChildren><Home /></AnimatedLayout></Layout>} />
-          <Route path="/quem-somos" element={<Layout><AnimatedLayout animationType="slideLeft" staggerChildren><QuemSomos /></AnimatedLayout></Layout>} />
-          <Route path="/projetos"   element={<Layout><AnimatedLayout animationType="scale" staggerChildren><Projetos /></AnimatedLayout></Layout>} />
-          <Route path="/acoes"      element={<Layout><AnimatedLayout animationType="slideRight" staggerChildren><Acoes /></AnimatedLayout></Layout>} />
-          <Route path="/eventos"    element={<Layout><AnimatedLayout animationType="fade" staggerChildren><Eventos /></AnimatedLayout></Layout>} />
-        </Routes>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <button onClick={() => setCount((count) => count + 1)}>
+          count is {count}
+        </button>
+        <p>
+          Edit <code>src/App.tsx</code> and save to test HMR
+        </p>
       </div>
-    </div>
-  );
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
+      </p>
+    </>
+  )
 }
 
-export default function App() {
-  return (
-    <Router>
-      <AppContent />
-    </Router>
-  );
-}
-
+export default App
