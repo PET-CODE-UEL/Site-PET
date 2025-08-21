@@ -1,28 +1,55 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import Home from "../pages/Home/Home";
-import Projetos from "../pages/Projetos/Projetos.tsx";
-import QuemSomos from "../pages/QuemSomos/QuemSomos.tsx";
-import Acoes from "../pages/Acoes/Acoes.tsx";
-import Eventos from "../pages/Eventos/Eventos.tsx";
+import { Link } from "react-router-dom";
+import LogoHorizontal from "../assets/logo_horizontal.svg";
 
 export default function Navbar() {
   return (
-    <BrowserRouter>
-      {/* Navigation */}
-      <nav>
-        <Link to="/">Home</Link> | <Link to="/quem-somos">Quem Somos</Link> |{" "}
-        <Link to="/projetos">Projetos</Link> | <Link to="/acoes">Ações</Link> |{" "}
-        <Link to="/eventos">Eventos</Link>
-      </nav>
+    <nav className="flex justify-between pl-4 pr-20 color-black">
+      {/* Logo à esquerda */}
+      <div>
+        <Link to="/">
+          <img
+            src={LogoHorizontal}
+            alt="Vetor do rosto de um Quati, com os escritos 'PET CODE' ao lado e um subtítulo 'computação e design'"
+            className="logo-horizontal"
+          />
+        </Link>
+      </div>
 
-      {/* Routes */}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/quem-somos" element={<QuemSomos />} />
-        <Route path="/projetos" element={<Projetos />} />
-        <Route path="/acoes" element={<Acoes />} />
-        <Route path="/eventos" element={<Eventos />} />
-      </Routes>
-    </BrowserRouter>
+      {/* Seções a direita da navbar */}
+      <div className="flex gap-15 m-5">
+        <div>
+          <Link
+            to="/quem-somos"
+            className="text-slate-800 font-bold duration-700 hover:text-xl"
+          >
+            Quem somos
+          </Link>
+        </div>
+        <div>
+          <Link
+            to="/projetos"
+            className="text-slate-800 font-bold duration-700 hover:text-xl"
+          >
+            Projetos
+          </Link>
+        </div>
+        <div>
+          <Link
+            to="/acoes"
+            className="text-slate-800 font-bold duration-700 hover:text-xl"
+          >
+            Ações
+          </Link>
+        </div>
+        <div>
+          <Link
+            to="/eventos"
+            className="text-slate-800 font-bold duration-700 hover:text-xl"
+          >
+            Eventos
+          </Link>
+        </div>
+      </div>
+    </nav>
   );
 }
